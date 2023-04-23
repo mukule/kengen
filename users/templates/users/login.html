@@ -1,124 +1,80 @@
-<!doctype html>
-{% load crispy_forms_tags %}
 {% load static %}
-{% load static %}
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Kenyaweb Solutions||Intranet</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" 
-    integrity="sha512-QNqdRkYAlL09Qx+0l/3/VJjl8naegBq3roHmXyyMHTmZIQ8XTkLGVckGu6x5yDdQ2UBG5U5e5UtwLXz4fLQ8mw==" 
-    crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link href="{% static 'fontawesomefree/css/all.min.css' %}" rel="stylesheet" type="text/css">
-    <style>
-        html, body {
-          height: 100%;
-          width: 100%;
-          margin: 0;
-          padding: 0;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          background: linear-gradient(to top right, #e81809, #180203 70%);
-        }
-        .container {
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          margin: auto;
-        }
-        .title {
-          text-align: center;
-          color: white;
-          font-size: 3em;
-          font-family: Arial, sans-serif;
-          line-height: 1em;
-          margin-bottom: 20px;
-        }
-        .title span {
-          display: block;
-        }
-        .icon {
-          display: block;
-          margin: auto;
-          width: 100px;
-          height: 100px;
-          font-size: 4em;
-          color: white;
-          text-align: center;
-          line-height: 100px;
-          background-color: #2e2e2e;
-          border-radius: 50%;
-          margin-top: 20px;
-        }
-        form {
-          display: block;
-          text-align: center;
-          margin-top: 20px;
-        }
-        input {
-          display: block;
-          margin: 10px auto;
-          padding: 5px;
-          width: 200px;
-          font-size: 1.2em;
-          border-radius: 5px;
-          border: none;
-        }
-        input[type="submit"] {
-          background-color: white;
-          color: #e81809;
-          cursor: pointer;
-        }
-        a {
-          display: block;
-          margin-top: 10px;
-          color: white;
-          text-decoration: none;
-        }
-      </style>
+<head>
+	<title>KenGen Intranet</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+<!--===============================================================================================-->	
+<link rel="icon" href="{% static 'main/images/icon.png' %}">
+<!--===============================================================================================-->
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'users/fonts/font-awesome-4.7.0/css/font-awesome.min.css' %}">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'users/css/util.css' %}">
+  <link href="{% static 'users/css/main.css' %}" rel="stylesheet" type="text/css">
+  
+<!--===============================================================================================-->
+</head>
+<body>
+	
+	<div class="limiter">
+		<div class="container-login100" style="background-image: url('{% static 'users/images/bg-01.jpg' %}');"
+    >
+			<div class="wrap-login100">
+        {% include '../main/includes/messaging.html' %}
+				<form class="login100-form validate-form" action="" method="POST">
+          {% csrf_token %}
+					<span class="login100-form-logo">
+            <img src="{% static 'main/images/logo-brand.png' %}" alt="Logo">
+					</span>
 
-     </head>
-  <body>
-    <div class="container">
-      {% load static %}
-      {% include '../main/includes/messaging.html' %}
-        <div class="title">
-          <span>Kenyaweb Solutions</span>
-          <span>Intranet</span>
+					<span class="login100-form-title p-b-34 p-t-27">
+						Intranet Login
+					</span>
+          <div class="form-group mb-3" >
+            {{ form.username }}
         </div>
-        <div class="row">
-          <div class="col-md-12 text-center mt-4">
-              <i class="fas fa-user fa-5x text-white"></i>
-             
-            </div>
-      </div>
-          <form action="" method="POST">
-            {% csrf_token %}
-            <div class="form-group">
-                {{ form.username }}
-            </div>
-            <div class="form-group">
-                {{ form.password }}
-            </div>
-            <div class="form-group">
-              <small class="disabled text-white">username:141 password:intranet@2023</small>
-          </div>
-            
-           
-            <!-- <input type="hidden" name="next" value="{{ request.GET.next }}"/> -->
-            <div class="form-group my-3" id="signup-button">
-                <button class="btn btn-success">Sign in</button>
-            </div>
-          </form>
-        <!-- <a href="{% url 'register' %}">Not registered?</a> -->
-        <a href="{% url 'password_reset' %}">Forgot password?</a>
-      </div>
-    </body>
-    </body>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
-  </body>
+        <div class="form-group mb-3">
+            {{ form.password }}
+        </div>
+					
+					<div class="container-login100-form-btn">
+						<button class="login100-form-btn">
+							Login
+						</button>
+					</div>
+
+					<div class="text-center p-t-90">
+            <a href="{% url 'password_reset' %}">Forgot password?</a>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	
+
+	<div id="dropDownSelect1"></div>
+	
+	<script src="https://cdn.jsdelivr.net/npm/jquery@2.2.4/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.4/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js"></script>
+	<script src="vendor/jquery/jquery-3.2.1.min.js"></script>
+<!--===============================================================================================-->
+	<script src="vendor/animsition/js/animsition.min.js"></script>
+<!--===============================================================================================-->
+	<script src="vendor/bootstrap/js/popper.js"></script>
+	<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+<!--===============================================================================================-->
+	<script src="vendor/select2/select2.min.js"></script>
+<!--===============================================================================================-->
+	<script src="vendor/daterangepicker/moment.min.js"></script>
+	<script src="vendor/daterangepicker/daterangepicker.js"></script>
+<!--===============================================================================================-->
+	<script src="vendor/countdowntime/countdowntime.js"></script>
+<!--===============================================================================================-->
+	<script src="js/main.js"></script>
+
+</body>
 </html>

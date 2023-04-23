@@ -619,17 +619,20 @@ aside.left-panel {
         display: none; }
       .navbar .navbar-nav li > a {
         background: none !important;
-        color: #607d8b;
+        color: #5C0E7B;
         display: inline-block;
         font-size: 14px;
-        line-height: 26px;
-        padding: 10px 0;
+        font-weight: bolder;
+        line-height: 50px;
+        text-transform: uppercase;
+        padding: 0;
         position: relative;
         width: 100%; }
+
         .navbar .navbar-nav li > a:hover, .navbar .navbar-nav li > a:hover .menu-icon {
-          color: #03a9f3; }
+          color: coral; }
         .navbar .navbar-nav li > a .menu-icon {
-          color: #607d8b;
+          color: #5C0E7B;
           float: left;
           margin-top: 8px;
           width: 55px;
@@ -919,7 +922,7 @@ header.fixed-top {
   width: 43px; }
 
 header .form-inline {
-  background: #131c21;
+  background: coral;
   display: none;
   height: 55px;
   margin: 0;
@@ -934,7 +937,7 @@ header .form-inline {
     margin: 0 auto;
     position: relative; }
     header .form-inline .search-form input[type="text"] {
-      background: #131c21;
+      background: coral;
       border: none;
       border-radius: 0;
       -webkit-box-shadow: none;
@@ -2116,10 +2119,14 @@ footer.site-footer {
     border: 0px solid transparent;
     padding: 1px; }
   .calender-cont td .fc-time {
-    color: white;
+    color: rgb(255, 255, 255);
     font-weight: 400;
     font-size: 11px;
-    padding: 2px; }
+    padding: 1px; }
+    .calender-cont td .fc-today {
+      background: coral !important;
+      color: white;
+      }
   .calender-cont .fc-left .fc-button-group {
     position: absolute;
     top: 0;
@@ -2148,11 +2155,51 @@ footer.site-footer {
     .calender-cont.widget-calender .fc-today-button {
       display: none; }
     .calender-cont.widget-calender .fc-widget-content {
-      height: 45px !important;
-      min-height: 45px !important; }
+      height: 30px !important;
+      min-height: 30px !important; }
     .calender-cont.widget-calender .fc-day-grid-container {
       max-height: 250px !important;
-      overflow: hidden !important; }
+     }
+     .welcome-msg {
+      display: flex;
+      min-height: 250px;
+    }
+    
+    .welcome-msg .profile-pic {
+      flex: 1;
+    }
+    
+    .welcome-msg .profile-pic img {
+      width: 100%;
+      height: auto;
+    }
+    
+    .welcome-msg .welcome-message {
+      flex: 3;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    
+    .welcome-msg .welcome-message h2 {
+      font-size: 28px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+    
+    .welcome-msg .welcome-message p {
+      font-size: 18px;
+      margin-bottom: 20px;
+    }
+    
+    /* Example of styling a link inside the welcome-message */
+    .welcome-msg .welcome-message a {
+      color: blue;
+      text-decoration: underline;
+    }
+    
+
 
 @media (max-width: 1680px) {
   .timeline li {
@@ -2502,6 +2549,118 @@ footer.site-footer {
   #cellPaiChart #pieLabel0 {
     left: inherit !important;
     right: 20px !important; }
+
+ 
+  #dashboard {
+    background-color: coral; /* Customize background color */
+    color: #fff; /* Customize text color */
+    border-radius: 10px;
+    font-size: large;
+  }
+
+  #dashboard:hover {
+    background-color: #5C0E7B; /* Customize hover background color */
+    color: #fff; /* Customize hover text color */
+  }
+
+  #dashboard:focus {
+    box-shadow: none; /* Remove focus border */
+  }
+
+  .message-list {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .message {
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: row;
+  }
+  
+  .in {
+    justify-content: flex-start;
+  }
+  
+  .out {
+    justify-content: flex-end;
+  }
+  
+  .message-text {
+    max-width: 60%;
+    padding: 5px 10px;
+    border-radius: 5px;
+    background-color: #eee;
+    word-wrap: break-word;
+  }
+  
+  .message-text p {
+    margin: 0;
+  }
+  
+  .date {
+    font-size: 12px;
+    margin-left: 10px;
+  }
+  
+  .reply-form {
+    margin-top: 20px;
+  }
+  
+  .reply-form h2 {
+    margin-bottom: 10px;
+  }
+  
+  .reply-form form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .reply-form label {
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+  
+  .reply-form input[type="text"],
+  .reply-form textarea {
+    padding: 5px;
+    margin-bottom: 10px;
+  }
+  
+  .reply-form button[type="submit"] {
+    padding: 5px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .reply-form button[type="submit"]:hover {
+    background-color: #00d950;
+  }
+  .reply-form textarea {
+  height: 150px;
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  resize: none;
+  width: 100%;
+  box-sizing: border-box;
+}
+/* Hide empty radio button */
+input[type="radio"][name="choice"][value=""] {
+display: none;
+}
+.form-group input[type="radio"] {
+display: block;
+margin: 10px 0;
+}
+
+.form-group button[type="submit"] {
+margin-top: 60px;
+}
 
     
 /*# sourceMappingURL=style.css.map */

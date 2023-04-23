@@ -27,9 +27,13 @@
             <button type="submit" class="btn text-white" style="background-color: coral;">Search</button>
           </div>
         </form>
-        <div class="col-auto">
-          <button type="submit" class="btn text-white" style="background-color: rgb(133, 80, 255);">Login</button>
-        </div>
+        <form method="post" action="{% url 'login' %}">
+          {% csrf_token %}
+          <div class="col-auto">
+            <button type="submit" class="btn text-white" style="background-color: rgb(133, 80, 255);">Login</button>
+          </div>
+        </form>
+        
       </div>
     </header>
      <section class="bg-light">

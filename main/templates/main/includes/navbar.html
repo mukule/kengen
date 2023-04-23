@@ -5,61 +5,37 @@
   <nav class="navbar navbar-expand-sm navbar-default">
       <div id="main-menu" class="main-menu collapse navbar-collapse">
           <ul class="nav navbar-nav">
-              <li class="active">
-                  <a href="{% url 'tasks:dashboard_home' %}"><i class="menu-icon fa fa-laptop"></i>Home</a>
+              <li class="menu-item btn-success mt-2 mb-2" id="dashboard">
+                  <a href="{% url 'tasks:dashboard_home' %}" class="text-white"><i class="menu-icon fa fa-dashboard"></i><strong>Dashboard</strong></a><i class="fa-light fa-grid-horizontal"></i>
               </li>
-              <li class="menu-title">Kenyaweb Intranet</li><!-- /.menu-title -->
-              <li class="menu-item-has-children dropdown">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-building"></i>Kenya web</a>
-                  <ul class="sub-menu children dropdown-menu">                            <li><i class="fa fa-home"></i><a href="#">Home</a></li>
-                      <li><i class="fa fa-info-circle"></i><a href="#">About us</a></li>
-                      
-                  </ul>
-              </li>
-              
+              <li class="menu-item">
+                <a href="{% url 'core:departmentview' %}"><i class="menu-icon fa fa-question"></i>ABOUT</a>
+            </li>
+            <li class="menu-item">
+                <a href="{% url 'core:departmentview' %}"><i class="menu-icon fa fa-users"></i>BOARD</a>
+            </li>
+            <li class="menu-item">
+                <a href="{% url 'core:departmentview' %}"><i class="menu-icon fa fa-th"></i>Departments</a>
+            </li>
               <li class="menu-item">
                 <a href="{% url 'core:departmentview' %}"><i class="menu-icon fa fa-users"></i>Staff</a>
             </li>
-              <li class="menu-item">
-                  <a href="{% url 'core:departmentview' %}"><i class="menu-icon fa fa-th"></i>Departments</a>
-              </li>
+            <li class="menu-item">
+                <a href="{% url 'core:departmentview' %}"><i class="menu-icon fa fa-th"></i>STATIONS</a>
+            </li>
+            <!-- <li class="menu-item">
+                <a href="{% url 'news:news_index' %}"><i class="menu-icon fa fa-th"></i>NEWS</a>
+            </li>
               <li class="menu-item">
                 <a href="{% url 'polls:index' %}"><i class="menu-icon fa fa-bars"></i>Opinion Polls</a>
             </li>
-              <li class="menu-title">Assets</li><!-- /.menu-title -->
-
               <li class="menu-item">
-                <a href="{% url 'applications:applications_list' %}"><i class="menu-icon fa fa-th"></i>Applications</a>
+                <a href="{% url 'applications:applications_list' %}"><i class="menu-icon fa fa-th"></i>ARTICLES</a>
+            </li> -->
+              </li>
+              <li class="menu-item">
+                <a href="{% url 'core:departmentview' %}"><i class="menu-icon fa fa-th"></i>SYSTEMS</a>
             </li>
-              </li>
-              <li>
-                <a href="{% url 'facilities:facility_list' %}"> <i class="menu-icon fa fa-tasks"></i>company Facilities</a>
-            </li>
-
-              <li class="menu-title">BE INFORMED</li><!-- /.menu-title -->
-
-              <li class="menu-item-has-children dropdown">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-tasks"></i>Whats Happening</a>
-                  <ul class="sub-menu children dropdown-menu">
-                      <li><i class="menu-icon ti-themify-logo"></i><a href="{% url 'news:news_index' %}">News</a></li>
-                      <li><i class="menu-icon ti-themify-logo"></i><a href="{% url 'events:events_list' %}">Events</a></li>
-                  </ul>
-              </li>
-              <li>
-                  <a href="{% url 'documents:company_doc' %}"> <i class="fa-regular fa fa-folder-open"></i>Documents </a>
-              </li>
-             
-              <li class="menu-title">Extras</li><!-- /.menu-title -->
-              <li class="menu-item-has-children dropdown">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="fa-solid fa fa-memo"></i>Pages</a>
-                  <ul class="sub-menu children dropdown-menu">
-                      <li><i class="menu-icon fa fa-sign-in"></i><a href="{% url 'admin:index' %}">Admin</a></li>
-                      {% if user.is_authenticated %}
-                      <li><i class="menu-icon fa fa-paper-plane"></i><a href="{% url 'profile' user.username %}">Reset Password</a></li>
-                      {% endif %}
-
-                  </ul>
-              </li>
           </ul>
       </div><!-- /.navbar-collapse -->
   </nav>
@@ -72,7 +48,7 @@
       <div class="top-left">
           <div class="navbar-header">
             
-              <a class="navbar-brand" href="{% url 'tasks:dashboard_home' %}"><img src="{% static 'main/images/logo-brand.png' %}" alt="Logo"></a>
+              <a class="navbar-brand" href="{% url 'tasks:dashboard_home' %}"><img src="{% static 'main/images/logo-brand1.png' %}" alt="Logo"></a>
               <a class="navbar-brand hidden" href="{% url 'tasks:dashboard_home' %}"><img src="images/logo2.png" alt="Logo"></a>
               <a id="menuToggle" class="menutoggle"><i class="fa fa-bars"></i></a>
           </div>

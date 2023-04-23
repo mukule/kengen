@@ -2,110 +2,221 @@
 {% load static %}
 {% load crispy_forms_tags %}
 {% block content %}
-<div class="breadcrumbs">
-    <div class="breadcrumbs-inner">
-        <div class="row m-0">
-            <div class="col-sm-6">
-                <div class="page-header float-left">
-                    <div class="page-title">
-                        <h1>Welcome to Your Homepage {{ user.username }}</h1>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-6">
-                <div class="page-header float-right">
-                    <div class="page-title">
-                        <ol class="breadcrumb text-right">
-                            <li><a href="#">We make it Happen Because we Believe in it, Cheers</a></li>
-                        </ol>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
 <div class="content">
-  {% if notifications %}
-  <div class="alert alert-info text-center" role="alert">
-      {% for notification in notifications %}
-          <div class="notification{% if notification.read %} notification-read{% endif %}">
-            <a href="{% url 'tasks:task_detail' pk=notification.task_id %}">
-              {{ notification.message }}
-          </a>
+  <div class="row">
+    <div class="col-md-8 col-sm-12">
+      <section class="card">
+        <div class="card-body">
+         <div class="welcome-msg">
+          <div class="row">
+            <div class="col-md-4 col-sm-12">
+              <div class="profile-pic">
+                <img class="rounded" src="{{ user.image.url }}" alt="Profile Picture">
+              </div>
+            </div>
+            <div class="col-md-8 col-sm-12">
+              <div class="welcome-message">
+                <h2>Welcome {{ user.first_name }}!</h2>
+                <p>We're thrilled to have you on board. Your dashboard is your hub for everything you need 
+                  to know about your tasks, projects, and notifications.</p>
+                <!-- Add more content here -->
+              </div>
+            </div>
           </div>
-      {% endfor %}
+         </div>
+        </div>
+      </section>
+      
+    </div>
+    
+    <div class="col-md-4 col-sm-12">
+      <section class="card">
+        <div class="card-body text-secondary">
+          <div class="calender-cont widget-calender">
+            <div id="calendar"></div>
+        </div>
+        </div>
+      </section>
+    </div>
   </div>
-  {% endif %}
-  
+  <!--End of first row-->
 
-
-    <div class="row">
-        <div class="col-sm-12">
-            <h4 class="text-center mb-2">All tasks</h4>
-            <table class="table">
-                <thead>
-                  <tr>
-                    <th scope="col">Name</th>
-                    <th scope="col">Priority</th>
-                    <th scope="col">Due Date</th>
-                    <th scope="col">Status</th>
-                  </tr>
-                </thead>
-                <tbody>
-                    {% for task in tasks %}
-    <tr>
-      <td>{{ task.name }}</td>
-      <td>{{ task.get_priority_display }}</td>
-      <td>{{ task.due_date }}</td>
-      <td>{{ task.get_status_display }}</td>
-      <td>
-        {% if task in assigned_tasks %}
-        <div class="alert alert-primary text-center" role="alert">
-          <a href="{% url 'tasks:task_detail' pk=task.pk %}">Assigned</a>
-        </div>
-        {% endif %}
-      </td>
-    </tr>
-    {% empty %}
-    <tr>
-      <td colspan="5">No tasks to display</td>
-    </tr>
-    {% endfor %}
-                  </tbody>
-              </table>
-        </div>
-        <!-- <div class="col-sm-6 bg-light">
-            <h4 class="text-center mb-2">Tasks assigned to Me</h4>
-            <table class="table">
-                <thead>
-                    <tr>
-                      <th scope="col">Name</th>
-                      <th scope="col">Priority</th>
-                      <th scope="col">Due Date</th>
-                      <th scope="col">Status</th>
-                    </tr>
-                  </thead>
-                    <tbody>
-                        {% for task in assigned_tasks %}
-                            <tr>
-                                <td>{{ task.name }}</td>
-                                <td>{{ task.get_priority_display }}</td>
-                                <td>{{ task.due_date }}</td>
-                                <td>{{ task.get_status_display }}</td>
-                            </tr>
-                        {% endfor %}
-                   
-                 
+  <div class="row">
+    <div class="col-lg-3">
+      <div class="row">
+        <div class="col">
+          <section class="card">
+            <div class="card-body">
+              <div class="row align-items-center">
+                <div class="col-auto">
+                  <div class="rounded-circle bg-secondary" style="width: 30px; height: 30px;">
+                    <img src="{{ user.image.url }}" alt="" class="rounded-circle">
+                  </div>
+                  
+                </div>
+                <div class="col">
+                  <h5 class="card-title mb-0">{{user.first_name}} {{user.last_name}}</h5>
+                  <small class="text-muted" disabled>{{user.job_function}}</small>
+                </div>
                 
-              </table>
-        </div> -->
+              </div>
+              <div class="row">
+                <div class="col">
+                  <p class="card-text mb-0"><label class="mb-0" style="color: #5C0E7B;">staff Number:</label> {{ user.username }}</p>
+                  <p class="card-text mb-0"><label class="mb-0" style="color: #5C0E7B;">Department</label>  
+                    {% for department in request.user.staff.departments.all %}
+                    {{ department.name }}
+                  {% empty %}
+                    Not assigned to any department
+                  {% endfor %}
+                  </p>
+                  <p class="card-text"><label class="mb-0" style="color: #5C0E7B;">Date started</label>:  {{ user.staff.start_date|date:"F j, Y" }}</p>
+                </div>
+              </div>
+            </div>
+          </section>
+          
+        </div>
       </div>
-      <!-- tasks/dashboard_home.html -->
-
-
-
+      <div class="row mt-0">
+        <div class="col">
+          <section class="card">
+            <div class="card-body text-secondary">
+              <h4 style="color: #5C0E7B;">Tasks</h4>
+            
+              <p>
+                {% for task in assigned_tasks %}
+                <a href="{% url 'tasks:task_detail' pk=task.pk %}" style="color: coral;">{{ task.name }}</a>
+                {% empty %}
+                No tasks assigned
+                {% endfor %}
+              </p>
+            </div>
+          
+          </section>
+          
+        </div>
+      </div>
+    </div>
+    
+    <div class="col-lg-3">
+      <section class="card">
+          <div class="card-body text-secondary">
+             <h5 class="mb-3"><strong class="mb-5">Schedules</strong></h5>
+             <div class="row">
+              {% for event in upcoming_events %}
+                <div class="col-3" style="color: #5C0E7B;"><strong>{{ event.event_date|date:'M d' }}</strong></div>
+                <div class="col-9">
+                  <div class="event" style="border-left: 1px solid coral; color: #5C0E7B; padding-left: 10px;">
+                  <p class="mb-0"><a style="color: black;" href="{% url 'events:event_detail' pk=event.pk %}">{{ event.name }}</a></p>
+                  <small class="badge" style="background: #5C0E7B;">Venue : {{ event.location}}</small>
+                  </div>
+                  {% if not forloop.last %}
+                  <hr style="margin: 10px 0; color: coral;">
+                  {% endif %}
+                </div>
+              {% empty %}
+                <div class="col-12">No upcoming events</div>
+              {% endfor %}
+            </div>    
+          </div>
+      </section>
+  </div>
+    
+  
+  <div class="col-lg-6">
+      <section class="card">
+        <div class="card-body text-secondary">
+          <h5 class="mb-3"><strong class="mb-5">News</strong></h5>
+          <div class="row">
+            {% for news_item in news %}
+             <div class="col-3" style="color: #5C0E7B;">
+            <p class="mb-0"><small>Date posted</p></small>
+            <strong>{{ news_item.date_posted|date:'M d' }}</strong>
+            <p class="mb-0"><small>Posted by</p></small>
+            <strong>{{ news_item.author }}</strong>
+          </div>
+             <div class="col-9">
+              <div class="event" style="border-left: 1px solid coral; color: #5C0E7B; padding-left: 10px;">
+                  <p class="mb-0">
+                      <a style="color: black;" href="{% url 'news:newsdetailview' pk=news_item.pk %}">
+                          {% if news_item.title|wordcount > 20 %}
+                              {{ news_item.title|truncatewords_html:20 }} <p><a href="{% url 'news:newsdetailview' pk=news_item.pk %}">Read more...</a></p>
+                          {% else %}
+                              {{ news_item.title }}
+                          {% endif %}
+                      </a>
+                  </p>
+              </div>
+              {% if not forloop.last %}
+              <hr style="margin: 10px 0; color: coral;">
+              {% endif %}
+          </div>
+          
+           {% empty %}
+             <div class="col-12">No upcoming events</div>
+           {% endfor %}
+         </div>    
+       </div>
+      </section>
+  </div>
+  
+  </div>
+  <!--End of second row-->
+  <div class="row">
+    <div class="col-lg-4">
+        <section class="card">
+          <div class="card-body text-secondary">
+            <h5 class="mb-3"><strong class="mb-5">Opinion Polls</strong></h5>
+            <div class="row">
+              {% if polls %}
+              {% for poll in polls %}
+               <div class="col-3" style="color: #5C0E7B;"><strong>{{ poll.pub_date|date:'M d' }}</strong></div>
+               <div class="col-9">
+                 <div class="event" style="border-left: 1px solid coral; color: #5C0E7B; padding-left: 10px;">
+                 <p class="mb-0"><a style="color: black;" href="{% url 'polls:poll_detail' pk=poll.pk %}"> {{ poll.question }}</a></p>
+                 <small class="badge" style="background: #5C0E7B;">Ends : {{ poll.end_date|date:'M d, Y' }}</small>
+                 </div>
+                 {% if not forloop.last %}
+                 <hr style="margin: 10px 0; color: coral;">
+                 {% endif %}
+               </div>
+             {% empty %}
+               <div class="col-12">No upcoming events</div>
+             {% endfor %}
+            </ul>
+            {% else %}
+                <p>There are no active polls at the moment.</p>
+            {% endif %}
+           </div>    
+         </div>
+        </section>
+    </div>
+    <div class="col-lg-4">
+        <section class="card">
+            <div class="card-body text-secondary">
+              <div style="height: 300px; overflow: auto;">
+                <div class="card-body">
+                  <a class="twitter-timeline" href="https://twitter.com/KenGenKenya?ref_src=twsrc%5Etfw">Tweets by KenGenKenya</a> 
+                  <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+                </div>
+              </div>
+            </div>
+        </section>
+    </div>
+    <div class="col-lg-4">
+        <section class="card">
+            <div class="card-body text-secondary">
+              <div style="height: 300px; overflow: auto;">
+                <div class="card-body">
+      <iframe src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.
+      facebook.com%2FKenGenKenya&tabs=timeline&width=750&height=300&small_header=true&adapt_container_width=true&hide_cover=false&show_facepile=false&appId=720838097985044" width="100%" height="500" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
+                </div>
+              </div>
+            </div>
+        </section>
+    </div>
+   
 </div>
-
+</div>
 {% endblock content %}
-

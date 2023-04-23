@@ -6,9 +6,11 @@ from django.shortcuts import render, redirect, get_object_or_404
 from .forms import TaskUpdateForm
 from django.contrib.auth.decorators import login_required
 from datetime import date
-
-
-
+from events.models import Event
+from django.utils import timezone
+from news.models import News
+from polls.models import Poll
+from django.db.models import F
 
 
 class TaskListView(LoginRequiredMixin, ListView):
@@ -19,16 +21,28 @@ class TaskListView(LoginRequiredMixin, ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        # Get tasks assigned to the logged-in user
+        # Get tasks assigned to the logged-in user that are not complete
         user = self.request.user
-        assigned_tasks = Task.objects.filter(assignments__assigned_to=user)
+        assigned_tasks = Task.objects.filter(assignments__assigned_to=user, assignments__completed=False)
 
         # Get unread notifications for the current user
         notifications = Notification.objects.filter(user=user, read=False)
 
+        # Get upcoming events
+        upcoming_events = Event.objects.filter(event_date__gt=timezone.now(), is_approved=True).order_by('event_date')
+
+        # Get news
+        news = News.objects.all().order_by('-date_posted')[:5]
+        #get the polls
+        latest_poll_list = Poll.objects.filter(pub_date__lte=timezone.now(), end_date__gte=timezone.now()).order_by(F('pub_date').asc())
+
         context['assigned_tasks'] = assigned_tasks
         context['notifications'] = notifications
+        context['upcoming_events'] = upcoming_events
+        context['news'] = news
+        context['polls'] = latest_poll_list
         return context
+
    
 
 

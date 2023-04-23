@@ -24,7 +24,7 @@ admin.site.index_title = 'Intranet Application Administrations'
 
 urlpatterns = [
     path('admin/', admin.site.urls, name='admin'),
-    path("", include('main.urls')),
+    # path("", include('main.urls')),
     path("", include('users.urls')),
     path("news/", include('news.urls', namespace='news')),
     path('articles/', include('articles.urls')),
