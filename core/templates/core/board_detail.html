@@ -1,0 +1,29 @@
+{% extends "main/base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="content">
+    <div class="row">
+        <div class="col">
+            <section class="card">
+                <div class="card-body text-secondary">
+                    <h4 class="card-title" style="color: #5C0E7B;">{{ board_member.name }}</h4>
+                    <p class="mb-0" style="color: coral;">{{ board_member.role }}</p>
+                </div>
+            </section>
+        </div>
+    </div>
+    <div class="card mb-3">
+        <div class="row g-0">
+            <div class="col-md-4">
+                <img src="{{ board_member.image.url }}" alt="{{ board_member.name }}" style="width:100%;">
+              </div>              
+          <div class="col-md-8">
+            <div class="card-body">
+              <p class="card-text">{{ board_member.details }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+</div>
+{% endblock content %}

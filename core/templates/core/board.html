@@ -1,0 +1,39 @@
+{% extends "main/base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="content">
+    <div class="row">
+        <div class="col">
+            <section class="card">
+                <div class="card-body text-secondary">
+                    <div class="bg-body-tertiary rounded">
+                        <h1 style="color: #5C0E7B;">Board Members</h1>
+                        <p style="color: black;">The Board is made up of eleven (11) members, comprising of Independent and Non-Executive Chairman, Managing Director & CEO, Cabinet Secretary-National Treasury, Principal Secretary- State Department for Energy, and seven Independent & Non-Executive Directors. The composition of the Board is 
+                            outlined in the Company’s Articles of Association. The biographies of the Board Members are as follows:</p>
+                       
+                      </div>
+                </div>
+            </section>
+        </div>
+    </div>
+    <div class="row">
+        {% for board_member in board_members %}
+        <div class="col-md-4">
+           <a href="{% url 'core:board_detail' pk=board_member.pk %}">
+
+            <div class="card">
+                <img src="{{ board_member.image.url }}" alt="{{ board_member.name }} image">
+                <div class="card-body text-center">
+                    <h4 class="card-title mb-3">{{ board_member.name }}</h4>
+                    <p class="card-text">{{ board_member.role }}</p>
+                </div>
+            </div>
+           </a>
+        </div>
+        {% empty %}
+        No board members found
+        {% endfor %}
+    </div>
+</div>
+{% endblock content %}
