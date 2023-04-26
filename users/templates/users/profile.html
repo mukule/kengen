@@ -1,100 +1,159 @@
 {% extends "main/base.html" %}
 {% load crispy_forms_tags %}
+{% load static %}
 {% block content %}
-<div class="container">
-    <div class="content-section col-lg-12 col-md-12 col-sm-12 tutorial-style" style="min-height:65vh;">
-        <legend class="border-bottom mb-4">Profile Information:</legend>
-        <form method="POST" enctype="multipart/form-data">
-            {% csrf_token %}
-            <div class="media">
-                {% if user.username == form.instance.username %}
-                <input id="id_image" type="file" name="image" hidden/>
-                    <label for="id_image">
-                        <img class="rounded-circle account-img profile-image"
-                            style="cursor: pointer"
-                            src="{{ form.instance.image.url }}"
-                            title="Upload new image">
-                    </label>
-            {% else %}
-                <img class="rounded-circle account-img profile-image", src="{{ form.instance.image.url }}">
-            {% endif %}
-                <div class="media-body">
-                    <h2 class="account-heading">{{ form.instance.first_name }} {{ form.instance.last_name }}</h2>
-                    <p class="text-secondary">{{ form.instance.job_description }}</p>
-                    <p class="text-secondary">{{ form.instance.contact_manager }}</p>
-                    <p class="text-secondary">{{ form.instance.phone }}</p>
-                    <p class="text-secondary">{{ form.instance.email }}</p>
-                    <p class="text-secondary">Feeling {{ form.instance.mood }}</p>
-                    <p class="text-secondary">{{ form.instance.facebook }}</p>
-                    <p class="text-secondary">{{ form.instance.twitter }}</p>
-                    <p class="text-secondary">{{ form.instance.linkedin }}</p>
-                    
-                    
+<div class="content">
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <div class="mx-auto d-block">
+                            <img class="rounded-circle mx-auto d-block" src="{{ form.instance.user.image.url }}" alt="{{ form.instance.user.first_name }} profile image">
+                            <h5 class="text-sm-center mt-1 mb-1">{{ form.instance.user.first_name }} {{ form.instance.user.last_name }}</h5>
+                            <div class="location text-sm-center">{{ form.instance.user.email }}</div>
+                            <div class="location text-sm-center">{{ form.instance.education }}</div>
+                            <div class="location text-sm-center">{{ form.instance.job_type }}</div>
+                            <div class="location text-sm-center">{{ form.instance.position }}</div>
+                            <div class="location text-sm-center">{{ user.staff.section.division.department.name }}</div>
+                            <div class="location text-sm-center">Date started: {{ form.instance.date_started }}</div>
+                        </div>
+                    </div>
+                    {% if user.username == form.instance.user.username %}
+                        <input id="id_image" type="file" name="image" hidden/>
+                        <label for="id_image" class="mb-0">
+                            <div class="card-footer text-center" style="cursor: pointer" title="Upload new image">
+                                <strong class="card-title">Update Profile pic</strong>
+                            </div>
+                        </label>
+                    {% endif %}
                 </div>
             </div>
-            <hr>
-            
-              
-              
-              
-            {% if user.username == form.instance.username %}
+            <!---->
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header">
+                        <h4>Biography</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="biography">
+                            {{ form.instance.bio }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-3">
+                <section class="card">
+                    <div class="card-header">Expertise & Skills</div>
+                    <div class="card-body text-secondary">
+                        {{ form.instance.skills }}
+                    </div>
+                </section>
+            </div>
+            <div class="col-lg-3">
+                <section class="card">
+                    <div class="card-header">Awards & Commendations</div>
+                    <div class="card-body text-secondary">
+                        {{ form.instance.awards }}
+                    </div>
+                </section>
+            </div>
+            <div class="col-lg-3">
+                <section class="card">
+                    <div class="card-header">Professional associations</div>
+                    <div class="card-body text-secondary">
+                        {{ form.instance.professional_associations }}
+                    </div>
+                </section>
+            </div>
+            <div class="col-lg-3">
+                <div class="card-header">Personal Interest</div>
+                <section class="card">
+                    <div class="card-body text-secondary">
+                        {{ form.instance.personal_interest }}
+                    </div>
+                </section>
+            </div>
+        </div>
+    
+        <div class="row">
+            <div class="col-lg-4">
+                <section class="card">
+                    <div class="card-header">Profesional Bodies</div>
+                    <div class="card-body text-secondary">
+                        {{ form.instance.professional_associations }}
+                    </div>
+                </section>
+            </div>
+            <div class="col-lg-8">
+                <section class="card">
+                    <div class="card-header">Workhistory</div>
+                    <div class="card-body text-secondary">
+                        {{ form.instance.work_history }}
+                    </div>
+                </section>
+            </div>
+        </div>
+       
+        {% if user.username == form.instance.user.username %}
+        <div class="row">
+            <div class="col">
+                <div class="card-header text-center">
+                    Edit your Profile Information
+                </div>
                 <fieldset class="form-group">
-                    <legend class="border-bottom mb-4">Edit Profile Information</legend>
                     <div class="form-row">
                         <div class="form-group col-md-4 mb-0">
-                            {{ form.linkedin|as_crispy_field }}
+                            {{ form.job_type|as_crispy_field }}
                         </div>
                         <div class="form-group col-md-4 mb-0">
-                            {{ form.facebook|as_crispy_field }}
+                            {{ form.position|as_crispy_field }}
                         </div>
                         <div class="form-group col-md-4 mb-0">
-                            {{ form.twitter|as_crispy_field }}
+                            {{ form.education|as_crispy_field }}
                         </div>
                     </div> 
                     <hr>
                     <div class="form-row">
                         <div class="form-group col-md-4 mb-0">
-                            {{ form.first_name|as_crispy_field }}
+                            {{ form.skills|as_crispy_field }}
                         </div>
                         <div class="form-group col-md-4 mb-0">
-                            {{ form.last_name|as_crispy_field }}
+                            {{ form.awards|as_crispy_field }}
                         </div>
                         <div class="form-group col-md-4 mb-0">
-                            {{ form.email|as_crispy_field }}
+                            {{ form.professional_associations|as_crispy_field }}
                         </div>
                     </div> 
+                    <hr>
                     <div class="form-row">
                         <div class="form-group col-md-4 mb-0">
-                            {{ form.job_function|as_crispy_field }}
+                            {{ form.personal_interest|as_crispy_field }}
                         </div>
                         <div class="form-group col-md-4 mb-0">
-                            {{ form.location|as_crispy_field }}
+                            {{ form.career_statement|as_crispy_field }}
                         </div>
                         <div class="form-group col-md-4 mb-0">
-                            {{ form.phone|as_crispy_field }}
+                            {{ form.work_history|as_crispy_field }}
                         </div>
                     </div> 
-                   <hr>
-                   <div class="form-row">
-                    <div class="form-group col-md-4 mb-0">
-                        {{ form.contact_manager|as_crispy_field }}
-                    </div>
-                    <div class="form-group col-md-8 mb-0">
-                        {{ form.mood|as_crispy_field }}
-                    </div>
-                   
-                </div> 
-               <hr>
-               
-
-    
-                    <a href="{% url 'password_change' %}">Change password?</a>
+                    <hr>
+                    <div class="form-row">
+                        <div class="form-group col-md-12 mb-0">
+                            {{ form.bio|as_crispy_field }}
+                        </div>
+                    </div> 
                 </fieldset>
-                <div class="form-group text-center">
-                    <button class="btn btn-success" type="submit">Update</button>
-                </div>
-            {% endif %}
-        </form>
-    </div>
+                
+                <a href="{% url 'password_change' %}">Change password?</a>
+            </fieldset>
+            <div class="form-group text-center">
+                <button class="btn btn-success" type="submit">Update</button>
+            </div>
+        {% endif %}
+    </form>
 </div>
 {% endblock content %}

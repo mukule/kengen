@@ -73,23 +73,6 @@ class UserLoginForm(AuthenticationForm):
         widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Password'}))
     
 
-
-    
-class UserUpdateForm(forms.ModelForm):
-    email = forms.EmailField(required=False)
-    job_function = forms.CharField(max_length=100, required=False)
-    location = forms.CharField(max_length=100, required=False)
-    phone = forms.CharField(max_length=100, required=False)
-    contact_manager = forms.CharField(max_length=100, required=False)
-    mood = forms.CharField(max_length=600, required=False)
-    linkedin = forms.CharField(max_length=100, required=False)
-    facebook = forms.CharField(max_length=100, required=False)
-    twitter = forms.CharField(max_length=100, required=False)
-
-    class Meta:
-        model = get_user_model()
-        fields = ['first_name', 'last_name', 'image', 'email', 'job_function', 'location', 'phone', 'contact_manager', 'mood', 'linkedin', 'facebook', 'twitter']
-
 class SetPasswordForm(SetPasswordForm):
     class Meta:
         model = get_user_model()

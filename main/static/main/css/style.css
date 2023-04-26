@@ -2198,7 +2198,16 @@ footer.site-footer {
       color: blue;
       text-decoration: underline;
     }
-    
+
+    .prof_header {
+      display: flex;
+      min-height: 150px;
+    }
+
+
+.biography{
+  min-height: 350px;
+}
 
 
 @media (max-width: 1680px) {

@@ -100,7 +100,7 @@ WSGI_APPLICATION = 'intranet.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'intranet',
+        'NAME': 'kengen',
         'USER': 'root',
         'PASSWORD': '',
         'HOST': 'localhost',

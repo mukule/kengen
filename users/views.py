@@ -4,10 +4,10 @@ from django.contrib import messages
 from .forms import UserRegisterForm, UserLoginForm
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
-from .forms import UserUpdateForm
+# from .forms import UserUpdateForm
 from django.contrib.auth import get_user_model
 from django.contrib.auth import get_user_model
-from .forms import UserUpdateForm
+# from .forms import UserUpdateForm
 from .forms import SetPasswordForm
 from .forms import PasswordResetForm
 from .decorators import user_not_authenticated
@@ -20,6 +20,7 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import EmailMessage
 from django.utils.html import strip_tags
 from django.core.mail import EmailMultiAlternatives
+from core.forms import StaffUpdateForm
 
 
 # Create your views here.
@@ -77,23 +78,24 @@ def custom_login(request):
 def profile(request, username):
     if request.method == 'POST':
         user = request.user
-        form = UserUpdateForm(request.POST, request.FILES, instance=user)
+        form = StaffUpdateForm(request.POST, request.FILES, instance=user.staff)
         if form.is_valid():
-            user_form = form.save()
+            staff_form = form.save()
 
-            messages.success(request, f'{user_form}, Your profile has been updated!')
-            return redirect('profile', user_form.username)
+            messages.success(request, f'{staff_form.user.username}, Your profile has been updated!')
+            return redirect('profile', staff_form.user.username)
 
         for error in list(form.errors.values()):
             messages.error(request, error)
 
     user = get_user_model().objects.filter(username=username).first()
     if user:
-        form = UserUpdateForm(instance=user)
+        form = StaffUpdateForm(instance=user.staff)
         
         return render(request, 'users/profile.html', context={'form': form, 'user': user})
 
     return redirect("home")
+
 
 @login_required
 def password_change(request):
