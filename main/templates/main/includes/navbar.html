@@ -78,7 +78,7 @@
 
                   <div class="user-menu dropdown-menu">
                     {% if user.is_authenticated %}
-                      <a class="nav-link" href="{% url 'profile' user.username %}"><i class="fa fa- user"></i>My Profile</a>
+                      <a class="nav-link" href="{% url 'core:staff_detail' username=request.user.username %}"><i class="fa fa- user"></i>My Profile</a>
                       {% endif %}
 
 

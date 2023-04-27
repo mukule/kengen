@@ -92,8 +92,8 @@ def profile(request, username):
                 staff_form.user.save()
             staff_form.save()
 
-            messages.success(request, f'{staff_form.user.username}, Your profile has been updated!')
-            return redirect('profile', staff_form.user.username)
+            messages.success(request, f'{staff_form.user.first_name}, Your profile has been updated!')
+            return redirect('core:staff_detail', staff_form.user.username)
 
         for error in list(form.errors.values()):
             messages.error(request, error)

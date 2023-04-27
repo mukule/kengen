@@ -2,168 +2,27 @@
 {% load crispy_forms_tags %}
 {% load static %}
 {% block content %}
+
+<div class="breadcrumbs">
+    <div class="breadcrumbs-inner">
+        <div class="row m-0">
+            <div class="col-sm-6">
+                <div class="page-header float-left">
+                    <div class="page-title">
+                        <h1>Edit your profile information</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <div class="content">
     <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         <div class="row">
-            <div class="col-md-4">
-                <div class="card">
-                    <div class="card-body text-center">
-                        <div class="mx-auto d-block">
-                            <img class="rounded-circle mx-auto d-block" style="width: 150px; height: 150px;" src="{{ form.instance.user.image.url }}" alt="{{ form.instance.user.first_name }} profile image">
-                            <h5 class="text-sm-center mt-1 mb-1">{{ form.instance.user.first_name }} {{ form.instance.user.last_name }}</h5>
-                            <div class="location text-sm-center">{% if form.instance.user.email %}{{ form.instance.user.email }}{% endif %}</div>
-                            <div class="location text-sm-center">
-                                {% if form.instance.education %}
-                                {{ form.instance.education }}
-                                {% else %}
-                                <p class="mb-0">No Data</p>
-                                {% endif %}
-                            </div>
-                            <div class="location text-sm-center">
-                                {% if form.instance.job_type %}
-                                {{ form.instance.job_type }}
-                                {% else %}
-                                <p class="mb-0">No Data</p>
-                                {% endif %}
-                            </div>
-                            <div class="location text-sm-center">
-                                {% if form.instance.position %}
-                                {{ form.instance.position }}
-                                {% else %}
-                                <p class="mb-0">No Data</p>
-                                {% endif %}
-                            </div>
-                            <div class="location text-sm-center">
-                                {% if user.staff.section and user.staff.section.division and user.staff.section.division.department %}
-                                {{ user.staff.section.division.department.name }}
-                                {% else %}
-                                <p class="mb-0">No Data</p>
-                                {% endif %}
-                            </div>
-                            <div class="location text-sm-center">
-                                {% if form.instance.date_started %}
-                                Date started: {{ form.instance.date_started }}
-                                {% else %}
-                                <p class="mb-0">No Data</p>
-                                {% endif %}</div>
-
-                        </div>
-                    </div>
-                    {% if user.username == form.instance.user.username %}
-                        <input id="id_image" type="file" name="image" hidden/>
-                        <label for="id_image" class="mb-0">
-                            <div class="card-footer text-center" style="cursor: pointer" title="Upload new image">
-                                <strong class="card-title">Update Profile pic</strong>
-                            </div>
-                        </label>
-                    {% endif %}
-                </div>
-            </div>
-            <!---->
-            <div class="col-md-8">
-                <div class="card">
-                    <div class="card-header">
-                        <h4>Biography</h4>
-                    </div>
-                    <div class="card-body">
-                        <div class="biography">
-                            {% if form.instance.bio %}
-                            {{ form.instance.bio }}
-                            {% else %}
-                                <p class="mb-0">No Data</p>
-                            {% endif %}
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-lg-3">
-                <section class="card">
-                    <div class="card-header">Expertise & Skills</div>
-                    <div class="card-body text-secondary">
-                        {% if form.instance.skills %}
-                        {{ form.instance.skills }}
-                        {% else %}
-                        <p class="mb-0">No Data</p>
-                    {% endif %}
-                    </div>
-                </section>
-            </div>
-            <div class="col-lg-3">
-                <section class="card">
-                    <div class="card-header">Awards & Commendations</div>
-                    <div class="card-body text-secondary">
-                        {% if form.instance.awards %}
-                        {{ form.instance.awards }}
-                        {% else %}
-                        <p class="mb-0">No Data</p>
-                    {% endif %}
-                    </div>
-                </section>
-            </div>
-            <div class="col-lg-3">
-                <section class="card">
-                    <div class="card-header">Professional associations</div>
-                    <div class="card-body text-secondary">
-                        {% if form.instance.professional_associations %}
-                        {{ form.instance.professional_associations }}
-                        {% else %}
-                        <p class="mb-0">No Data</p>
-                    {% endif %}
-                        
-                    </div>
-                </section>
-            </div>
-            <div class="col-lg-3">
-                <div class="card-header">Personal Interest</div>
-                <section class="card">
-                    <div class="card-body text-secondary">
-                        {% if form.instance.personal_interest %}
-                        {{ form.instance.personal_interest }}
-                        {% else %}
-                        <p class="mb-0">No Data</p>
-                    {% endif %}
-                    </div>
-                </section>
-            </div>
-        </div>
-    
-        <div class="row">
-            <div class="col-lg-4">
-                <section class="card">
-                    <div class="card-header">Profesional Bodies</div>
-                    <div class="card-body text-secondary">
-                        {% if form.instance.professional_associations %}
-                        {{ form.instance.professional_associations }}
-                        {% else %}
-                        <p class="mb-0">No Data</p>
-                    {% endif %}
-                    </div>
-                </section>
-            </div>
-            <div class="col-lg-8">
-                <section class="card">
-                    <div class="card-header">Workhistory</div>
-                    <div class="card-body text-secondary">
-                        {% if form.instance.work_history %}
-                        {{ form.instance.work_history }}
-                        {% else %}
-                        <p class="mb-0">No Data</p>
-                    {% endif %}
-                    </div>
-                </section>
-            </div>
-        </div>
-       
         {% if user.username == form.instance.user.username %}
         <div class="row">
             <div class="col">
-                <div class="card-header text-center">
-                    Edit your Profile Information
-                </div>
                 <fieldset class="form-group">
                     <div class="form-row">
                         <div class="form-group col-md-4 mb-0">

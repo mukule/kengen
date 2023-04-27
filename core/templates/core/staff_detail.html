@@ -1,0 +1,102 @@
+{% extends "main/base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="content">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card text-center">
+                <img class="card-img-top" src="{{ staff.user.image.url }}" style="width: 100%; height: 250px;" alt="Card image cap">
+                <div class="card-body">
+                    <h4 class="card-title mb-0">{{ staff.user.first_name }} {{ staff.user.last_name }}</h4>
+                    <p class="card-text mb-0">{{ staff.position }}</p>
+                    <p class="card-text mb-0">{{ staff.section.division.department.name }}</p>
+                    <p class="card-text mb-0">{{ staff.job_type }}</p>
+                    <p class="card-text mb-0">{{ staff.date_started }}</p>
+                    <p class="card-text mb-0">{{ staff.education }}</p>
+                    <p class="card-text mb-0">{{ staff.user.email }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h4>Biography</h4>
+                </div>
+                <div class="card-body">
+                    <div class="biography">
+                       {{ staff.bio }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-3">
+            <section class="card">
+                <div class="card-header">Expertise & Skills</div>
+                <div class="card-body text-secondary">
+                    {{ staff.skills }}
+                </div>
+            </section>
+        </div>
+        <div class="col-lg-3">
+            <section class="card">
+                <div class="card-header">Awards</div>
+                <div class="card-body text-secondary">
+                    {{ staff.awards }}
+                </div>
+            </section>
+        </div>
+        <div class="col-lg-3">
+            <section class="card">
+                <div class="card-header">Professional associations</div>
+                <div class="card-body text-secondary">
+                    {{ staff.professional_associations }}
+                </div>
+            </section>
+        </div>
+        <div class="col-lg-3">
+            <div class="card-header">Personal Interest</div>
+            <section class="card">
+                <div class="card-body text-secondary">
+                    {{ staff.personal_interest }}
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-6">
+            <section class="card">
+                <div class="card-header">Profesional Bodies</div>
+                <div class="card-body text-secondary">
+                    {{ staff.career_statement }}
+                </div>
+            </section>
+        </div>
+        <div class="col-lg-6">
+            <section class="card">
+                <div class="card-header">Workhistory</div>
+                <div class="card-body text-secondary">
+                    {{ staff.personal_interest }}
+                </div>
+            </section>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col col-lg-12">
+            <section class="card">
+                {% if request.user.username == staff.user.username %}
+                <a href="{% url 'profile' user.username %}">
+                    <div class="card-body text-secondary text-center">Update profile</div>
+                </a>
+            {% endif %}
+            
+            </section>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
+

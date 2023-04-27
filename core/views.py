@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.views.generic import ListView,DetailView,CreateView,UpdateView,DeleteView
 from .models import Department, Staff
 from django.contrib.auth.decorators import login_required
@@ -21,10 +21,9 @@ class departmentdetail(DetailView):
 
     
     
-class staffdetail(DetailView):
-    model = Staff
-    template_name = 'core/staffs.html'
-    context_object_name = 'staffs'
+def staff_detail(request, username):
+    staff = get_object_or_404(Staff, user__username=username)
+    return render(request, 'core/staff_detail.html', {'staff': staff})
 
 class BoardMemberListView(ListView):
     model = BoardMember

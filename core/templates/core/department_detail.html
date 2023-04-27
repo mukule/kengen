@@ -23,7 +23,7 @@
                 <img class="card-img-top" height="250px" src="{{ departments.hod.image.url }}" alt="{{ departments.hod.username }} profile pic">
                 <div class="card-body text-center">
                     {% if departments.hod %}
-        <a href="{% url 'profile' departments.hod.username %}">
+        <a href="">
             <h4 class="card-title mb-0">{{ departments.hod.first_name }} {{ departments.hod.last_name }}</h4>
         </a>
     {% else %}
