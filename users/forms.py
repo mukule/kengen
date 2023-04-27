@@ -73,6 +73,8 @@ class UserLoginForm(AuthenticationForm):
         widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Password'}))
     
 
+
+
 class SetPasswordForm(SetPasswordForm):
     class Meta:
         model = get_user_model()

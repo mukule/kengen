@@ -21,6 +21,8 @@ from django.core.mail import EmailMessage
 from django.utils.html import strip_tags
 from django.core.mail import EmailMultiAlternatives
 from core.forms import StaffUpdateForm
+from django.shortcuts import render, redirect, get_object_or_404
+from users.models import CustomUser
 
 
 # Create your views here.
@@ -75,12 +77,20 @@ def custom_login(request):
         )
 
 
+
+
+@login_required
 def profile(request, username):
+    user = get_object_or_404(CustomUser, username=username)
     if request.method == 'POST':
-        user = request.user
         form = StaffUpdateForm(request.POST, request.FILES, instance=user.staff)
         if form.is_valid():
-            staff_form = form.save()
+            staff_form = form.save(commit=False)
+            image = form.cleaned_data['image']
+            if image:
+                staff_form.user.image = image
+                staff_form.user.save()
+            staff_form.save()
 
             messages.success(request, f'{staff_form.user.username}, Your profile has been updated!')
             return redirect('profile', staff_form.user.username)
@@ -88,13 +98,10 @@ def profile(request, username):
         for error in list(form.errors.values()):
             messages.error(request, error)
 
-    user = get_user_model().objects.filter(username=username).first()
-    if user:
-        form = StaffUpdateForm(instance=user.staff)
+    form = StaffUpdateForm(instance=user.staff)
         
-        return render(request, 'users/profile.html', context={'form': form, 'user': user})
+    return render(request, 'users/profile.html', context={'form': form, 'user': user})
 
-    return redirect("home")
 
 
 @login_required

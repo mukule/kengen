@@ -19,12 +19,7 @@ class departmentdetail(DetailView):
     template_name = 'core/department_detail.html'
     context_object_name ='departments'
 
-    def get(self, request, *args, **kwargs):
-        department = self.get_object()
-        staff = department.staff.all()
-        for staff_member in staff:
-            print(staff_member.user.username)
-        return super().get(request, *args, **kwargs)
+    
     
 class staffdetail(DetailView):
     model = Staff

@@ -10,14 +10,44 @@
                 <div class="card">
                     <div class="card-body text-center">
                         <div class="mx-auto d-block">
-                            <img class="rounded-circle mx-auto d-block" src="{{ form.instance.user.image.url }}" alt="{{ form.instance.user.first_name }} profile image">
+                            <img class="rounded-circle mx-auto d-block" style="width: 150px; height: 150px;" src="{{ form.instance.user.image.url }}" alt="{{ form.instance.user.first_name }} profile image">
                             <h5 class="text-sm-center mt-1 mb-1">{{ form.instance.user.first_name }} {{ form.instance.user.last_name }}</h5>
-                            <div class="location text-sm-center">{{ form.instance.user.email }}</div>
-                            <div class="location text-sm-center">{{ form.instance.education }}</div>
-                            <div class="location text-sm-center">{{ form.instance.job_type }}</div>
-                            <div class="location text-sm-center">{{ form.instance.position }}</div>
-                            <div class="location text-sm-center">{{ user.staff.section.division.department.name }}</div>
-                            <div class="location text-sm-center">Date started: {{ form.instance.date_started }}</div>
+                            <div class="location text-sm-center">{% if form.instance.user.email %}{{ form.instance.user.email }}{% endif %}</div>
+                            <div class="location text-sm-center">
+                                {% if form.instance.education %}
+                                {{ form.instance.education }}
+                                {% else %}
+                                <p class="mb-0">No Data</p>
+                                {% endif %}
+                            </div>
+                            <div class="location text-sm-center">
+                                {% if form.instance.job_type %}
+                                {{ form.instance.job_type }}
+                                {% else %}
+                                <p class="mb-0">No Data</p>
+                                {% endif %}
+                            </div>
+                            <div class="location text-sm-center">
+                                {% if form.instance.position %}
+                                {{ form.instance.position }}
+                                {% else %}
+                                <p class="mb-0">No Data</p>
+                                {% endif %}
+                            </div>
+                            <div class="location text-sm-center">
+                                {% if user.staff.section and user.staff.section.division and user.staff.section.division.department %}
+                                {{ user.staff.section.division.department.name }}
+                                {% else %}
+                                <p class="mb-0">No Data</p>
+                                {% endif %}
+                            </div>
+                            <div class="location text-sm-center">
+                                {% if form.instance.date_started %}
+                                Date started: {{ form.instance.date_started }}
+                                {% else %}
+                                <p class="mb-0">No Data</p>
+                                {% endif %}</div>
+
                         </div>
                     </div>
                     {% if user.username == form.instance.user.username %}
@@ -38,7 +68,12 @@
                     </div>
                     <div class="card-body">
                         <div class="biography">
+                            {% if form.instance.bio %}
                             {{ form.instance.bio }}
+                            {% else %}
+                                <p class="mb-0">No Data</p>
+                            {% endif %}
+
                         </div>
                     </div>
                 </div>
@@ -49,7 +84,11 @@
                 <section class="card">
                     <div class="card-header">Expertise & Skills</div>
                     <div class="card-body text-secondary">
+                        {% if form.instance.skills %}
                         {{ form.instance.skills }}
+                        {% else %}
+                        <p class="mb-0">No Data</p>
+                    {% endif %}
                     </div>
                 </section>
             </div>
@@ -57,7 +96,11 @@
                 <section class="card">
                     <div class="card-header">Awards & Commendations</div>
                     <div class="card-body text-secondary">
+                        {% if form.instance.awards %}
                         {{ form.instance.awards }}
+                        {% else %}
+                        <p class="mb-0">No Data</p>
+                    {% endif %}
                     </div>
                 </section>
             </div>
@@ -65,7 +108,12 @@
                 <section class="card">
                     <div class="card-header">Professional associations</div>
                     <div class="card-body text-secondary">
+                        {% if form.instance.professional_associations %}
                         {{ form.instance.professional_associations }}
+                        {% else %}
+                        <p class="mb-0">No Data</p>
+                    {% endif %}
+                        
                     </div>
                 </section>
             </div>
@@ -73,7 +121,11 @@
                 <div class="card-header">Personal Interest</div>
                 <section class="card">
                     <div class="card-body text-secondary">
+                        {% if form.instance.personal_interest %}
                         {{ form.instance.personal_interest }}
+                        {% else %}
+                        <p class="mb-0">No Data</p>
+                    {% endif %}
                     </div>
                 </section>
             </div>
@@ -84,7 +136,11 @@
                 <section class="card">
                     <div class="card-header">Profesional Bodies</div>
                     <div class="card-body text-secondary">
+                        {% if form.instance.professional_associations %}
                         {{ form.instance.professional_associations }}
+                        {% else %}
+                        <p class="mb-0">No Data</p>
+                    {% endif %}
                     </div>
                 </section>
             </div>
@@ -92,7 +148,11 @@
                 <section class="card">
                     <div class="card-header">Workhistory</div>
                     <div class="card-body text-secondary">
+                        {% if form.instance.work_history %}
                         {{ form.instance.work_history }}
+                        {% else %}
+                        <p class="mb-0">No Data</p>
+                    {% endif %}
                     </div>
                 </section>
             </div>

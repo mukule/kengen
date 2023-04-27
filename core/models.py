@@ -16,8 +16,11 @@ class Department(models.Model):
         return self.name
     
     def staff_count(self):
-        return self.sections.aggregate(total_staff_count=models.Count('staff'))['total_staff_count']
+        sections = Section.objects.filter(division__department=self)
+        return sections.aggregate(total_staff_count=models.Count('staff_members'))['total_staff_count']
+    
     staff_count.short_description = 'Staff Count'
+
 
     
 class Division(models.Model):

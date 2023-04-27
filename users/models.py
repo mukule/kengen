@@ -4,10 +4,12 @@ import os
 
 class CustomUser(AbstractUser):
     email = models.EmailField(unique=True)
-    
-    
+    first_name = models.CharField(max_length=30)
+    last_name = models.CharField(max_length=30)
+
     def __str__(self):
-        return self.username
+        return f"{self.username} ({self.first_name} {self.last_name})"
+
     
     def image_upload_to(self, instance=None):
         if instance:
