@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib import admin
-from .models import Staff, Section
+from .models import *
 from django.forms import ModelForm
 from django.forms import ModelForm, ClearableFileInput
 
@@ -33,4 +33,3 @@ class StaffUpdateForm(ModelForm):
         model = Staff
         fields = ['job_type', 'education', 'professional_associations', 'position', 'bio',
                   'personal_interest', 'work_history', 'career_statement', 'skills', 'awards', 'image']
-

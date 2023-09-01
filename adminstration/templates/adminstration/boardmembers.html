@@ -15,11 +15,35 @@
         </div>
     </div>
 </div>
-
 <div class="content">
-    
-   
-    
-</div>
+    <div class="row">
+        {% for board_member in board_members %}
+        <div class="col-md-4">
+           <a href="{% url 'core:board_detail' pk=board_member.pk %}">
 
+            <div class="card">
+                <img src="{{ board_member.image.url }}" alt="{{ board_member.name }} image">
+                <div class="card-body text-center">
+                    <h4 class="card-title mb-3">{{ board_member.name }}</h4>
+                    <p class="card-text">{{ board_member.role }}</p>
+                </div>
+            </div>
+           </a>
+        </div>
+        {% empty %}
+        No board members found
+        {% endfor %}
+    </div>
+    <div class="row">
+        <div class="col col-lg-12">
+            <section class="card">
+                <div class="card-body text-secondary text-center">
+                    <a href="{% url 'adminstration:create_board_member' %}" class="btn btn-primary btn-lg btn-block" style="background-color: #5C0E7B;; color: white;">
+                         Add New Board Member
+                    </a>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>
 {% endblock content %}

@@ -72,12 +72,12 @@ class Staff(models.Model):
 
 
 
-
 class BoardMember(models.Model):
     name = models.CharField(max_length=100)
-    image = models.ImageField(upload_to='board_members/')
+    image = models.ImageField(default='default/user.png', upload_to='board_members/')
     role = models.CharField(max_length=100)
     details = models.TextField()
+
 
     def __str__(self):
         return self.name

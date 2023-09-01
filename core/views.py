@@ -1,6 +1,7 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404,redirect
 from django.views.generic import ListView,DetailView,CreateView,UpdateView,DeleteView
-from .models import Department, Staff
+from .models import *
+from .forms import *
 from django.contrib.auth.decorators import login_required
 from .models import BoardMember 
 
@@ -34,3 +35,4 @@ class BoardMemberDetailView(DetailView):
     model = BoardMember
     template_name = 'core/board_detail.html'
     context_object_name = 'board_member'
+

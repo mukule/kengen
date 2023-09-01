@@ -1,0 +1,46 @@
+{% extends "main/base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="breadcrumbs">
+    <div class="breadcrumbs-inner">
+        <div class="row m-0">
+            <div class="col-sm-4">
+                <div class="page-header float-left">
+                    <div class="page-title">
+                        <h1>{{ department.name }} Department</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="content">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card">
+                <img class="card-img-top" height="250px" src="{{ department.hod.image.url }}" alt="{{ department.hod.username }} profile pic">
+                <div class="card-body text-center">
+                    {% if department.hod %}
+        <a href="">
+            <h4 class="card-title mb-0">{{ department.hod.first_name }} {{ department.hod.last_name }}</h4>
+        </a>
+    {% else %}
+        <h4 class="card-title mb-0">No HOD assigned</h4>
+    {% endif %}                  
+                </div>                
+            </div>
+        </div>
+        <div class="col-lg-8 ">
+            <section class="card">
+                <div class="card-body text-secondary">col-lg-6</div>
+            </section>
+        </div>
+    </div>
+</div>
+
+  
+
+{% endblock content %}
+
