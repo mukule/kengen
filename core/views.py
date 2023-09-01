@@ -7,20 +7,18 @@ from .models import BoardMember
 
 # Create your views here.
 
-
-
-class departmentview(ListView):
-    model = Department
-    template_name = 'core/department_list.html'
-    context_object_name = 'departments'
-
-
-class departmentdetail(DetailView):
-    model = Department
-    template_name = 'core/department_detail.html'
-    context_object_name ='departments'
-
+def departmentview(request):
+    departments = Department.objects.all()
+    staff_members = Staff.objects.all()
     
+    return render(request, 'core/department_list.html', {'departments': departments, 'staff_members': staff_members})
+
+def departmentdetail(request, pk):
+    department = get_object_or_404(Department, pk=pk)
+    sections = Section.objects.filter(division__department=department)
+    staff_members = Staff.objects.filter(section__in=sections)
+
+    return render(request, 'core/department_detail.html', {'departments': department, 'staff_members': staff_members})
     
 def staff_detail(request, username):
     staff = get_object_or_404(Staff, user__username=username)
