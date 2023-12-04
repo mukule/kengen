@@ -23,12 +23,15 @@
                 <div class="card">
                     <div class="card-body text-center">
                         <a href="{% url 'core:departmentdetail' pk=department.pk %}">
-                            <p class="mb-0">{{ department.name }}</p>
+                            <p class="mb-0">{{ department.name }}</p><small>{%if department.abbreviation %} ({{department.abbreviation}}) {%endif%}</small>
                             <p class="mb-0">{{ department.hod }}</p>
                             <div class="card-footer">
                                 <div class="row">
                                     <div class="col">
                                         <p class="mb-0">Divisions: {{ department.divisions.count }}</p>
+                                    </div>
+                                    <div class="col">
+                                        <p class="mb-0">Sections: {{ department.section_count }}</p>
                                     </div>
                                     <div class="col">
                                         <p class="mb-0">Staff: {{ department.staff_count }}</p>
@@ -42,38 +45,5 @@
             {% endfor %}
         </div>
     </div>
-
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="card">
-                <div class="card-header">
-                    <strong class="card-title">Staffs</strong>
-                </div>
-                <div class="card-body">
-                    <table class="table">
-                        <thead class="thead-dark">
-                            <tr>
-                                <th scope="col">Full Name</th>
-                                <th scope="col">Job Type</th>
-                                <th scope="col">Date Started</th>
-                                <th scope="col">Department</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for staff in staff_members %}
-                            <tr>
-                                <td>{{ staff.user.get_full_name }}</td>
-                                <td>{{ staff.job_type }}</td>
-                                <td>{{ staff.date_started }}</td>
-                                <td>{{ staff.section.division.department.name }}</td>
-                            </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
-
 </div>
 {% endblock content %}

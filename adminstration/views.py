@@ -34,7 +34,7 @@ def create_board_member(request):
 
 def create_department(request):
     if request.method == 'POST':
-        form = DepartmentCreateForm(request.POST)
+        form = DepartmentCreateForm(request.POST, request.FILES,)
         if form.is_valid():
             form.save()
             return redirect('adminstration:departments')  # Redirect to a list view of departments
@@ -43,6 +43,20 @@ def create_department(request):
 
     context = {'form': form}
     return render(request, 'adminstration/create_department.html', context)
+
+
+def department_edit(request, pk):
+    department = get_object_or_404(Department, pk=pk)
+    
+    if request.method == 'POST':
+        form = DepartmentCreateForm(request.POST, request.FILES, instance=department)
+        if form.is_valid():
+            form.save()
+            return redirect('adminstration:department', department_id=department.pk)
+    else:
+        form = DepartmentCreateForm(instance=department)
+
+    return render(request, 'adminstration/dep_edit.html', {'form': form, 'department': department})
 
 def departments(request):
     departments = Department.objects.all()

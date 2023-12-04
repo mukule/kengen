@@ -20,7 +20,7 @@ class DivisionInline(admin.StackedInline):
 
 @admin.register(Department)
 class DepartmentAdmin(admin.ModelAdmin):
-    list_display = ('name', 'hod', 'division_count', 'staff_count', 'performance_score')
+    list_display = ('name', 'hod', 'division_count', 'staff_count')
     inlines = [DivisionInline]
 
     def division_count(self, obj):

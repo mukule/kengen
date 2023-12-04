@@ -1,16 +1,19 @@
 from django.db import models
 from users.models import CustomUser
 
-
 class Department(models.Model):
     name = models.CharField(max_length=100)
     hod = models.ForeignKey(CustomUser, on_delete=models.SET_NULL, null=True, related_name='hod_department')
+    location = models.CharField(max_length=100, null=True, blank=True)
+    phone_number = models.CharField(max_length=15, null=True, blank=True)
+    email = models.EmailField(null=True, blank=True)
     mandate = models.TextField(blank=True)
     charter = models.FileField(upload_to='charters/', null=True, blank=True)
     vision = models.ImageField(upload_to='visions/', null=True, blank=True)
     strategy = models.ImageField(upload_to='strategies/', null=True, blank=True)
     description = models.TextField(blank=True)
-    performance_score = models.FloatField(null=True, blank=True)
+    abbreviation = models.CharField(max_length=50, null=True, blank=True)
+    hod_message = models.TextField(null=True, blank=True)
 
     def __str__(self):
         return self.name
@@ -20,6 +23,11 @@ class Department(models.Model):
         return sections.aggregate(total_staff_count=models.Count('staff_members'))['total_staff_count']
     
     staff_count.short_description = 'Staff Count'
+
+    def section_count(self):
+        return self.divisions.aggregate(total_sections=models.Count('sections'))['total_sections']
+
+    section_count.short_description = 'Section Count'
 
 
     

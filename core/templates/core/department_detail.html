@@ -5,10 +5,10 @@
 <div class="breadcrumbs">
     <div class="breadcrumbs-inner">
         <div class="row m-0">
-            <div class="col-sm-4">
+            <div class="col-sm-12">
                 <div class="page-header float-left">
                     <div class="page-title">
-                        <h1>{{ departments.name }} Department</h1>
+                        <h1>Department:.{{ departments.name }}  {%if department.abbreviation%} ({{departments.abbreviation}}) {%endif%}</h1>
                     </div>
                 </div>
             </div>
@@ -18,60 +18,77 @@
 
 <div class="content">
     <div class="row">
-        <div class="col-md-4">
-            <div class="card">
-                <img class="card-img-top" height="250px" src="{{ departments.hod.image.url }}" alt="{{ departments.hod.username }} profile pic">
-                <div class="card-body text-center">
-                    {% if departments.hod %}
-        <a href="">
-            <h4 class="card-title mb-0">HOD: {{ departments.hod.first_name }} {{ departments.hod.last_name }}</h4>
-        </a>
-    {% else %}
-        <h4 class="card-title mb-0">No HOD assigned</h4>
-    {% endif %}                  
-                </div>                
-            </div>
-        </div>
-        <div class="col-lg-8 ">
-            <section class="card border border-success">
-                <div class="card-header">
-                    <strong class="card-title">Know your HOD</strong>
-                </div>
+        <div class="col-lg-9 ">
+            <section class="card border-0">
                 <div class="card-body">
-                    <p class="card-text">Details about HOD</p>
+                  <div class="row">
+                    {%if departments.mandate %}
+                    <p class="card-text">{{departments.mandate|safe}}</p>
+                    {%else%}
+                    <p class="card-text text-danger">Mandate Not Set</p>
+                    {%endif%}
+                  </div>
+
+                  <div class="row">
+                    <h1 class="mb-1">Department Charter</h1>
+                    {% if departments.charter %}
+                        <embed src="{{ departments.charter.url }}" type="application/pdf" width="100%" height="400px">
+                    {% else %}
+                        <h4 class="card-title text-danger">Charter Not Set</h4>
+                    {% endif %}
+                  </div>
+
+                  <div class="row">
+                    <h1 class="mb-1 mt-1">Vision & Mission</h1>
+                    {% if departments.vision %}
+                        <img src="{{ departments.vision.url }}" alt="Vision Image" class="img-fluid">
+                    {% else %}
+                        <h4 class="card-title text-danger">Vision & Mission Not Set</h4>
+                    {% endif %}
+                </div>
+                
+                <div class="row mt-4">
+                    {% if departments.strategy %}
+                        <img src="{{ departments.strategy.url }}" alt="Strategy Image" class="img-fluid">
+                    {% else %}
+                        <h4 class="card-title text-danger">Strategy Not Set</h4>
+                    {% endif %}
+                </div>
+                
                 </div>
             </section>
+          
+            
+            
         </div>
-    </div>
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="card">
-                <div class="card-header">
-                    <strong class="card-title">Staffs</strong>
-                </div>
-                <div class="card-body">
-                    <table class="table">
-                        <thead class="thead-dark">
-                            <tr>
-                                <th scope="col">Full Name</th>
-                                <th scope="col">Job Type</th>
-                                <th scope="col">Date Started</th>
-                                <th scope="col">Department</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for staff in staff_members %}
-                            <tr>
-                                <td>{{ staff.user.get_full_name }}</td>
-                                <td>{{ staff.job_type }}</td>
-                                <td>{{ staff.date_started }}</td>
-                                <td>{{ staff.section.division.department.name }}</td>
-                            </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
+        <div class="col-md-3">
+            <div class="card border-0">
+                <img class="card-img-top" height="250px" src="{{ departments.hod.image.url }}" alt="{{ departments.hod.username }} profile pic">
+                <div class="card-body text-center">
+                    
+                    {% if departments.hod %}
+                    <h4 class="card-title mb-3">General Manager</h4>
+        <a href="">
+           
+            <p class="card-title mb-1">{{ departments.hod.first_name }} {{ departments.hod.last_name }}</p>
+        </a>
+    {% else %}
+        <h4 class="card-title mb-0 text-danger">Not assigned</h4>
+    {% endif %}      
+      
+                </div>                
             </div>
+            <section class="card border-0">
+                <div class="card-body">
+                    <h4 class="card-title">Fact File</h4>
+                    <h3>Total staff: {{staffs}}</h3>
+                        {% for division in div_staff_count %}
+                        <p class="card-text">  {{ division.name }} - {{ division.total_staff_count }}</p>
+                        {% endfor %}
+                      
+        
+                </div>
+            </section>          
         </div>
     </div>
 </div>

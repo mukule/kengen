@@ -2,7 +2,7 @@
 {% load static %}
 {% load crispy_forms_tags %}
 {% block content %}
-<div class="container ">
+<div class="container">
     <div class="breadcrumbs">
         <div class="breadcrumbs-inner">
             <div class="row m-0">
@@ -18,42 +18,45 @@
     </div>
     <div class="content">
         <div class="row">
-            {% for department in departments %}
-            <div class="col-md-4 col-12">
-                <div class="card">
-                    <div class="card-body text-center">
-                        <a href="{% url 'adminstration:department' department_id=department.pk %}">
-                            <p class="mb-0">{{ department.name }}</p>
-                            <p class="mb-0">{{ department.hod }}</p>
-                            <div class="card-footer">
-                               <div class="row">
-                                <div class="col"> <p class="mb-0">Divisions: {{ department.divisions.count }}</p>
-                                  </div>
-                                  <div class="col">  <p class="mb-0">Staff: {{ department.staff_count }}</p></div>
-                               </div>
-                            </div>
-                            
-                        </a>
-                    </div>
-                    
+            <div class="col-lg-12">
+                <div class="table-stats order-table ov-h">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th class="serial">#</th>
+                                <th>Name</th>
+                                <th>General Manager</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for department in departments %}
+                                <tr>
+                                    <td class="serial">{{ forloop.counter }}</td>
+                                    <td>
+                                        <a href="{% url 'adminstration:department' department_id=department.pk %}">{{ department.name }}</a>
+                                    </td>
+                                    <td>{{ department.hod }}</td>
+                                    <td><a href="{% url 'adminstration:dep_edit' pk=department.pk %}"><span class="badge badge-pending">Edit</span> <span class="badge badge-pending">Delete</span></a></td>
+                                    
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
                 </div>
             </div>
-            {% endfor %}
         </div>
-        <div class="row">
+        <div class="row text-center">
             <div class="col col-lg-12">
                 <section class="card">
                     <div class="card-body text-secondary text-center">
-                        <a href="{% url 'adminstration:create_department' %}" class="btn btn-primary btn-lg btn-block" style="background-color: #5C0E7B;; color: white;">
+                        <a href="{% url 'adminstration:create_department' %}" class="btn btn-primary btn-lg btn-block" style="background-color: #5C0E7B; color: white;">
                              Add New Department
                         </a>
                     </div>
                 </section>
             </div>
         </div>
-        
+    </div>
 </div>
-
-
 {% endblock content %}
-

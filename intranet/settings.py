@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'fontawesomefree',
     'crispy_forms',
     'crispy_bootstrap4',
+    'ckeditor',
     'news',
     'articles',
     'tinymce',
@@ -161,27 +162,24 @@ LOGIN_REDIRECT_URL = 'profile'
 AUTHENTICATION_BACKENDS = ['users.backends.EmailBackend']
 DATA_UPLOAD_MAX_MEMORY_SIZE = 5242880
 
-#what you see is what you get editor
-TINYMCE_DEFAULT_CONFIG = {
-    'custom_undo_redo_levels': 100,
-    'selector': 'textarea',
-    "menubar": "file edit view insert format tools table help",
-    'plugins': 'link image preview codesample contextmenu table code lists fullscreen',
-    'toolbar1': 'undo redo | backcolor casechange permanentpen formatpainter removeformat formatselect fontselect fontsizeselect',
-    'toolbar2': 'bold italic underline blockquote | alignleft aligncenter alignright alignjustify '
-               '| bullist numlist | outdent indent | table | link image | codesample | preview code | tiny_mce_wiris_formulaEditor tiny_mce_wiris_formulaEditorChemistry',
-    'contextmenu': 'formats | link image',
-    'block_formats': 'Paragraph=p; Header 1=h1; Header 2=h2',
-    'fontsize_formats': "8pt 10pt 12pt 14pt 16pt 18pt",
-    'content_style': "body { font-family: Arial; background: white; color: black; font-size: 12pt}",
-    'codesample_languages': [
-        {'text': 'Python', 'value': 'python'}, {'text': 'HTML/XML', 'value': 'markup'},],
-    'image_class_list': [{'title': 'Fluid', 'value': 'img-fluid', 'style': {} }],
-    'width': 'auto',
-    "height": "600px",
-    "images_upload_url": "upload_image",
-    'image_caption': True,
+
+
+CKEDITOR_UPLOAD_PATH = "uploads/"
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': 'Custom',
+        'height': 300,
+        'width': 300,
+        'toolbar_Custom': [
+            ['Bold', 'Italic', 'Underline'],
+            ['NumberedList', 'BulletedList'],
+            ['Link', 'Unlink'],
+        ],
+    },
 }
+
+X_FRAME_OPTIONS = 'SAMEORIGIN'
+
 
 
 # Emailing settings
