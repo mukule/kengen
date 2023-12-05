@@ -24,6 +24,7 @@ urlpatterns = [
     path("messaging/", include('messaging.urls', namespace='messaging')),
     path("polls/", include('polls.urls', namespace='polls')),
     path("adminstration/", include('adminstration.urls', namespace='adminstration')),
+    path("users/", include('users.urls', namespace='users')),
   
 ]
 if settings.DEBUG:

@@ -39,6 +39,7 @@ def departmentdetail(request, pk):
                }
 
     return render(request, 'core/department_detail.html', context)
+
     
 def staff_detail(request, username):
     staff = get_object_or_404(Staff, user__username=username)

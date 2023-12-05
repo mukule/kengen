@@ -88,6 +88,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'main.context_processors.site_title',
             ],
         },
     },
@@ -180,6 +181,8 @@ CKEDITOR_CONFIGS = {
 
 X_FRAME_OPTIONS = 'SAMEORIGIN'
 
+SITE_TITLE = "KenGen Intranet"
+
 
 
 # Emailing settings
@@ -190,5 +193,6 @@ EMAIL_HOST_USER = 'kenyawebapps87@gmail.com'
 EMAIL_HOST_PASSWORD = 'pzjotxvpakzrzlhi'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
+FROM_EMAIL = 'nelson.masibo@kenyaweb.com'
 
 PASSWORD_RESET_TIMEOUT = 14400

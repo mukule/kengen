@@ -93,14 +93,18 @@ def create_section(request):
     context = {'form': form}
     return render(request, 'section/create_section.html', context)
 
-def create_staff(request):
-    if request.method == 'POST':
-        form = StaffCreateForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('staff_list')  # Redirect to a list view of staff members
-    else:
-        form = StaffCreateForm()
 
-    context = {'form': form}
-    return render(request, 'staff/create_staff.html', context)
+
+
+
+
+def staffs(request):
+    users = CustomUser.objects.all()
+    context = {'users': users}
+    return render(request, 'adminstration/staffs.html', context)
+
+def delete_staff(request, user_id):
+    user = get_object_or_404(CustomUser, pk=user_id)
+
+    user.delete()
+    return redirect('adminstration:staffs')

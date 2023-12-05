@@ -1,13 +1,10 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 from django.contrib import messages
-from .forms import UserRegisterForm, UserLoginForm
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
-# from .forms import UserUpdateForm
 from django.contrib.auth import get_user_model
 from django.contrib.auth import get_user_model
-# from .forms import UserUpdateForm
 from .forms import SetPasswordForm
 from .forms import PasswordResetForm
 from .decorators import user_not_authenticated
@@ -23,33 +20,91 @@ from django.core.mail import EmailMultiAlternatives
 from core.forms import StaffUpdateForm
 from django.shortcuts import render, redirect, get_object_or_404
 from users.models import CustomUser
+from users.forms import *
+
+from django.http import HttpResponse
+import secrets
+from django.template.loader import render_to_string
+from django.utils.http import urlencode
+from django.core.mail import send_mail
+import random
+import string
+from users.forms import *
 
 
-# Create your views here.
-def register(request):
-    # if request.user.is_authenticated:
-    #     return redirect('/')
+# # Create your views here.
+# def register(request):
+#     # if request.user.is_authenticated:
+#     #     return redirect('/')
 
-    if request.method == "POST":
-        form = UserRegisterForm(request.POST)
+#     if request.method == "POST":
+#         form = UserRegisterForm(request.POST)
+#         if form.is_valid():
+#             user = form.save()
+#             login(request, user)
+#             messages.success(request, f"New account created: {user.username}")
+#             return redirect('login')
+
+#         else:
+#             for error in list(form.errors.values()):
+#                 messages.error(request, error)
+
+#     else:
+#         form = UserRegisterForm()
+
+#     return render(
+#         request=request,
+#         template_name = "users/register.html",
+#         context={"form": form}
+#         )
+
+
+def generate_random_password(length=10):
+    characters = string.ascii_letters + string.digits + string.punctuation
+    password = ''.join(random.choice(characters) for _ in range(length))
+    return password
+
+def add_staff(request):
+    if request.method == 'POST':
+        form = StaffForm(request.POST, request.FILES,)
         if form.is_valid():
             user = form.save()
-            login(request, user)
-            messages.success(request, f"New account created: {user.username}")
-            return redirect('login')
 
+            # Generate a random 8-digit password
+            password = generate_random_password()
+
+            # Update the user's password
+            user.set_password(password)
+            user.save()
+
+            # Send email with login details
+            send_details(user, password)
+
+            # Add success message
+            messages.success(request, f"{user.username}'s staff account has been created successfully. Login details have been sent to {user.email}.")
+
+            return redirect('adminstration:staffs') 
         else:
-            for error in list(form.errors.values()):
-                messages.error(request, error)
-
+            # Add error messages to the form
+            for field, errors in form.errors.items():
+                for error in errors:
+                    messages.error(request, f"Error in {field}: {error}")
     else:
-        form = UserRegisterForm()
+        form = StaffForm()
+        
+    context = {'form': form}
+    return render(request, 'adminstration/create_staff.html', context)
 
-    return render(
-        request=request,
-        template_name = "users/register.html",
-        context={"form": form}
-        )
+def send_details(user, password):
+    subject = 'Staff Account Created Successfully'
+    message = render_to_string('adminstration/details.html', {'user': user, 'password': password})
+    from_email = 'nelson.masibo@kenyaweb.com'
+    to_email = user.email
+
+    # Send the email
+    send_mail(subject, message, from_email, [to_email])
+
+
 
 def custom_login(request):
     if request.method == "POST":

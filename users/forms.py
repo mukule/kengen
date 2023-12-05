@@ -5,58 +5,127 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.forms import SetPasswordForm
 from django.contrib.auth.forms import PasswordResetForm
 from django.contrib.auth.forms import UserChangeForm
+from .models import *
+from core.models import *
+from ckeditor.widgets import CKEditorWidget
 
 
-
-
-class UserRegisterForm(UserCreationForm):
+class StaffForm(UserCreationForm):
     username = forms.CharField(
         max_length=30,
         widget=forms.TextInput(attrs={'placeholder': 'Username', 'class': 'form-control'}),
         label='',
     )
     email = forms.EmailField(
-        max_length=254,
-        widget=forms.EmailInput(attrs={'placeholder': 'Email', 'class': 'form-control'}),
-        label='',
-    )
+            max_length=254,
+            widget=forms.EmailInput(attrs={'placeholder': 'Email', 'class': 'form-control'}),
+            label='',
+        )
     first_name = forms.CharField(
-        max_length=30,
-        widget=forms.TextInput(attrs={'placeholder': 'Enter First Name', 'class': 'form-control'}),
-        label='',
-       
-    )
+            max_length=30,
+            widget=forms.TextInput(attrs={'placeholder': 'Enter First Name', 'class': 'form-control'}),
+            label='',
+        
+        )
     last_name = forms.CharField(
         max_length=30,
         widget=forms.TextInput(attrs={'placeholder': 'Enter Last Name', 'class': 'form-control'}),
         label='',
         
     )
- 
-
-    password1 = forms.CharField(
-        label='',
-        widget=forms.PasswordInput(attrs={'placeholder': 'Password', 'class': 'form-control', 'autocomplete': 'new-password'}),
-        
+    gender = forms.ModelChoiceField(
+        queryset=Gender.objects.all(),
+        widget=forms.Select(attrs={'class': 'form-control', 'id': 'gender'}),
+        label='Gender',
+        required=False,
     )
-    password2 = forms.CharField(
-        label='',
-        widget=forms.PasswordInput(attrs={'placeholder': 'Confirm Password', 'class': 'form-control', 'autocomplete': 'new-password'}),
-        
+    marital_status = forms.ModelChoiceField(
+        queryset=MaritalStatus.objects.all(),
+        widget=forms.Select(attrs={'class': 'form-control', 'id': 'marital_status'}),
+        label='Marital Status',
+        required=False,
+    )
+    title = forms.ModelChoiceField(
+        queryset=Honorific.objects.all(),
+        widget=forms.Select(attrs={'class': 'form-control', 'id': 'title'}),
+        label='Title',
+        required=False,
+    )
+    access_level = forms.ChoiceField(
+        choices=CustomUser.ACCESS_LEVEL_CHOICES,
+        widget=forms.Select(attrs={'class': 'form-control', 'id': 'access_level'}),
+        label='Access Level',
+    )
+    image = forms.ImageField(
+        widget=forms.FileInput(attrs={'class': 'form-control', 'id': 'image'}),
+        label='Image',
+        required=False,
+    )
+    about = forms.CharField(
+        widget=CKEditorWidget(attrs={'class': 'form-control', 'rows': 3}),
+        label='About',
+        required=False,
     )
 
+    biography = forms.CharField(
+        widget=CKEditorWidget(attrs={'class': 'form-control', 'rows': 3}),
+        label='Biography',
+        required=False,
+    )
+
+    career = forms.CharField(
+        widget=CKEditorWidget(attrs={'class': 'form-control', 'rows': 3}),
+        label='Career',
+        required=False,
+    )
+
+    skills = forms.CharField(
+        widget=CKEditorWidget(attrs={'class': 'form-control', 'rows': 3}),
+        label='Skills',
+        required=False,
+    )
+
+    other_roles = forms.CharField(
+        widget=CKEditorWidget(attrs={'class': 'form-control', 'rows': 3}),
+        label='Other Roles',
+        required=False,
+    )
+
+    interests = forms.CharField(
+        widget=CKEditorWidget(attrs={'class': 'form-control', 'rows': 3}),
+        label='Interests',
+        required=False,
+    )
+    department = forms.ModelChoiceField(
+        queryset=Department.objects.all(),
+        widget=forms.Select(attrs={'class': 'form-control', 'id': 'department'}),
+        label='Department',
+        required=False,
+    )
+    division = forms.ModelChoiceField(
+        queryset=Division.objects.all(),
+        widget=forms.Select(attrs={'class': 'form-control', 'id': 'division'}),
+        label='Division',
+        required=False,
+    )
+    section = forms.ModelChoiceField(
+        queryset=Section.objects.all(),
+        widget=forms.Select(attrs={'class': 'form-control', 'id': 'section'}),
+        label='Section',
+        required=False,
+    )
+    location = forms.ModelChoiceField(
+        queryset=Location.objects.all(),
+        widget=forms.Select(attrs={'class': 'form-control', 'id': 'location'}),
+        label='Location',
+        required=False,
+    )
 
     class Meta:
-        model = get_user_model()
-        fields = ['username', 'first_name', 'last_name', 'email', 'password1', 'password2']
-
-    def save(self, commit=True):
-        user = super(UserRegisterForm, self).save(commit=False)
-        user.email = self.cleaned_data['email']
-        if commit:
-            user.save()
-        return user
-    
+        model = CustomUser
+        fields = ['username', 'email', 'first_name', 'last_name',
+                  'gender', 'marital_status', 'title', 'access_level', 'image',
+                  'about', 'biography', 'career', 'skills', 'other_roles', 'interests', 'section']
 
     
 class UserLoginForm(AuthenticationForm):
@@ -95,5 +164,3 @@ class CustomUserChangeForm(UserChangeForm):
         model = get_user_model()
         fields = '__all__'
 
-
-    
